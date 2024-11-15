@@ -23,10 +23,24 @@ public class GenomeCompressor {
      * Reads a sequence of 8-bit extended ASCII characters over the alphabet
      * { A, C, T, G } from standard input; compresses and writes the results to standard output.
      */
+    private static int[] charMap = new int['t' + 1];
+
+    public static void initializeCharMap() {
+        charMap['c'] = 0b01;
+        charMap['C'] = 0b01;
+        charMap['t'] = 0b10;
+        charMap['T'] = 0b10;
+        charMap['g'] = 0b11;
+        charMap['G'] = 0b11;
+    }
+
     public static void compress() {
-
-        // TODO: complete the compress() method
-
+        String sequence = BinaryStdIn.readString();
+        int numBases = sequence.length();
+        BinaryStdOut.write(numBases);
+        for (int i = 0; i < numBases; i++) {
+            BinaryStdOut.write(charMap[sequence.charAt(i)], 2);
+        }
         BinaryStdOut.close();
     }
 
@@ -34,8 +48,6 @@ public class GenomeCompressor {
      * Reads a binary sequence from standard input; expands and writes the results to standard output.
      */
     public static void expand() {
-
-        // TODO: complete the expand() method
 
         BinaryStdOut.close();
     }
@@ -48,7 +60,7 @@ public class GenomeCompressor {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-
+        initializeCharMap();
         if      (args[0].equals("-")) compress();
         else if (args[0].equals("+")) expand();
         else throw new IllegalArgumentException("Illegal command line argument");
