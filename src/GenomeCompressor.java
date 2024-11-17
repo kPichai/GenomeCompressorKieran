@@ -23,12 +23,12 @@ public class GenomeCompressor {
      * Reads a sequence of 8-bit extended ASCII characters over the alphabet
      * { A, C, T, G } from standard input; compresses and writes the results to standard output.
      */
-    // Mapping chars to unique 2 bit sequences for compressing and expanding
     private static int[] charMap = new int['t' + 1];
     private static char[] reverseCharMap = new char[4];
     private static final int CHAR_LENGTH = 8;
     private static final int BINARY_CODE_LENGTH = 2;
 
+    // Mapping chars to unique 2 bit sequences for compressing
     public static void initializeCharMap() {
         charMap['c'] = 0b01;
         charMap['C'] = 0b01;
@@ -37,6 +37,8 @@ public class GenomeCompressor {
         charMap['g'] = 0b11;
         charMap['G'] = 0b11;
     }
+
+    // Mapping 2 bit sequences to corresponding chars for expanding
     public static void initializeReverseCharMap() {
         reverseCharMap[0b00] = 'A';
         reverseCharMap[0b01] = 'C';
