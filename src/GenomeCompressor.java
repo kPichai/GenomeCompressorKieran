@@ -26,6 +26,8 @@ public class GenomeCompressor {
     // Mapping chars to unique 2 bit sequences for compressing and expanding
     private static int[] charMap = new int['t' + 1];
     private static char[] reverseCharMap = new char[4];
+    private static final int CHAR_LENGTH = 8;
+    private static final int BINARY_CODE_LENGTH = 2;
 
     public static void initializeCharMap() {
         charMap['c'] = 0b01;
@@ -51,7 +53,7 @@ public class GenomeCompressor {
         BinaryStdOut.write(numBases);
         // Then individually turns each char into a 2 bit code
         for (int i = 0; i < numBases; i++) {
-            BinaryStdOut.write(charMap[sequence.charAt(i)], 2);
+            BinaryStdOut.write(charMap[sequence.charAt(i)], BINARY_CODE_LENGTH);
         }
         BinaryStdOut.close();
     }
@@ -66,10 +68,10 @@ public class GenomeCompressor {
         for (int i = 0; i < len; i++) {
             char c;
             // Reads in single 2 bit code
-            int bits = BinaryStdIn.readChar(2);
+            int bits = BinaryStdIn.readChar(BINARY_CODE_LENGTH);
             // Converts bits to corresponding char
             c = reverseCharMap[bits];
-            BinaryStdOut.write(c, 8);
+            BinaryStdOut.write(c, CHAR_LENGTH);
         }
         BinaryStdOut.close();
     }
